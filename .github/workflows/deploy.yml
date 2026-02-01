@@ -1,0 +1,35 @@
+name: Flutter Web FTP Deploy
+
+on:
+  push:
+    branches:
+      - main # រត់រាល់ពេល Push កូដទៅ branch main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter 💙
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          flutter-version: '3.x' # អ្នកអាចប្តូរតាម Version ដែលអ្នកប្រើ
+
+      - name: Install Dependencies 🔧
+        run: flutter pub get
+
+      - name: Build Web 🏗️
+        run: flutter build web --release
+
+      - name: FTP Deploy 🚀
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: build/web/ # Folder ដែល Flutter build រួច
+          server-dir: /public_html/ # ទីតាំង Folder លើ Server របស់អ្នក
