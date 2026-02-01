@@ -19,5 +19,4 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./
-          # ចំណុចស្លាប់រស់៖ InfinityFree ប្រើ /htdocs/
-          server-dir: /htdocs/
+          server-dir: htdocs/ # សាកល្បងដក / ពីមុខចេញ
